@@ -1,0 +1,19 @@
+TO specify destination name
+
+wget -O image.txt https://www.google.com/doodles/gerardus-mercators-503rd-birthday
+
+
+
+TO get links from a list
+
+wget -i list1.txt
+
+
+BASH SCRIPT
+
+
+stringZ = https://en.wikipedia.org/wiki/Linux
+echo ${stringZ##h*/}
+
+
+GOAL:    stringZ = enwikipediaorgwikiLinux
