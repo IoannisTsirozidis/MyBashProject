@@ -1,9 +1,6 @@
 #!/bin/bash
 	
 filename='list1.txt'
-n=0
-arrUrl=()
-
 
 while read line; do
 # reading each line
