@@ -3,9 +3,8 @@
 textbook_name=$1
 num=$2
 
-
-line= line=$(head -n 1 textbook_name)
-
+while read line; do
+#line="I'm sure _I_ sha'n't be able!"
 IFS=' |-' 
 read -ra stringarray <<< "$line"
 
@@ -15,9 +14,9 @@ for i in "${stringarray[@]}"; do
 	for (( j=0; j<${#i}; j++ )); do
   		currChar=${i:$j:1}
   		
-  		#if [[ "$currChar" == "'" ]]; then
-  		#	${i%\'*}
-  		#fi
+  		if [[ "$currChar" == "'" ]]; then
+  			i=${i%\'*}
+  		fi
   		
   		if [[ "$currChar" =~ [a-zA-Z] ]];then
   			if [[ "$currChar" =~ [A-Z] ]]; then
@@ -33,9 +32,6 @@ for i in "${stringarray[@]}"; do
 	if ! [ -z "$result1" ]; then
 		echo $result1
 	fi
-	
+done;
 
-done
-
-
-#echo ${stringarray[3]}
+done <"$textbook_name"
