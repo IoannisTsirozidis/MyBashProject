@@ -3,12 +3,26 @@
 textbook_name=$1
 num=$2
 field_box=()
-all_words=()
-count_times=()
-counta=0
+
+string1="START OF THIS PROJECT GUTENBERG EBOOK"
+string2="END OF THIS PROJECT GUTENBERG EBOOK"
+
+#Checks if string1, exists in .txt file, or if it has already been deleted
+if grep -Eq "$string1" "$textbook_name"
+then
+	sed -i '1,/START OF THIS PROJECT GUTENBERG EBOOK/d' "$textbook_name"
+fi
+
+
+#A second Check for string2
+if grep -Eq "$string2" "$textbook_name"
+then
+	sed -i '/END OF THIS PROJECT GUTENBERG EBOOK/Q' "$textbook_name"
+fi
+
+
 
 while read line; do
-#line="I'm sure _I_ sha'n't be able!"
 IFS=' |-' 
 read -ra stringarray <<< "$line"
 
@@ -35,24 +49,11 @@ for i in "${stringarray[@]}"; do
 	
 	if ! [ -z "$result1" ]; then
 		field_box+=("$result1")
-		#echo $result1
-		#if [[ " ${field_box[*]} " =~ " ${result1} " ]]; then
-    			#all_words+=("$result1")
-    			#when array contains value
-    			
-		#fi
 
-		#if [[ ! " ${field_box[*]} " =~ " ${result1} " ]]; then
-    			#field_box+=("$result1")
-    			#when array doesn't contain value
-		#fi
 	fi
 done;
 
 done <"$textbook_name"
-
-#echo Items: ${#field_box[@]}
-#echo Data: ${field_box[@]}
 
 > "appendmode.txt"
 for i in "${field_box[@]}"
