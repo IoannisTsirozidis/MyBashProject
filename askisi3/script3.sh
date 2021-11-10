@@ -62,11 +62,8 @@ do
 echo -n $i" " >> "appendmode.txt"
 done
 
-tr -c '[:alnum:]' '[\n*]' < "appendmode.txt" | sort | uniq -c | sort -nr | head  -$num
-
-
-
-
+sed -e 's/\s/\n/g' < "appendmode.txt" | sort | uniq -c | sort -nr | head  -$num | awk '{print $2,$1}'
+rm "appendmode.txt"
 
 
 
