@@ -4,6 +4,18 @@ textbook_name=$1
 num=$2
 field_box=()
 
+if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+    echo
+    echo `basename $0` " [filename_param]  [integer_param]"
+    echo -e "\n"
+    echo '    '`basename $0`" is a script that takes as first parameter the name of a .txt file,"
+    echo '    '"as a second parameter a positive integer N, greater than 0"
+    echo '    '"and returns the N most seen words that are included in the .txt file"
+    echo -e "\n"
+    exit 0
+fi
+
+
 string1="START OF THIS PROJECT GUTENBERG EBOOK"
 string2="END OF THIS PROJECT GUTENBERG EBOOK"
 
