@@ -16,20 +16,19 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
 fi
 
 
+
 string1="START OF THIS PROJECT GUTENBERG EBOOK"
 string2="END OF THIS PROJECT GUTENBERG EBOOK"
 
 #Checks if string1, exists in .txt file, or if it has already been deleted
-if grep -Eq "$string1" "$textbook_name"
-then
+if grep -q "$string1" "$textbook_name"; then
 	sed -i '1,/START OF THIS PROJECT GUTENBERG EBOOK/d' "$textbook_name"
 fi
 
 
 #A second Check for string2
-if grep -Eq "$string2" "$textbook_name"
-then
-	sed -i '/END OF THIS PROJECT GUTENBERG EBOOK/Q' "$textbook_name"
+if grep -q "$string2" "$textbook_name" ; then	
+	sed -i '/END OF THIS PROJECT GUTENBERG EBOOK/,$d' "$textbook_name"
 fi
 
 
@@ -77,6 +76,3 @@ done
 
 sed -e 's/\s/\n/g' < "appendmode.txt" | sort | uniq -c | sort -nr | head  -$num | awk '{print $2,$1}'
 rm "appendmode.txt"
-
-
-
