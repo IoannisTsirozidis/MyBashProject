@@ -74,5 +74,5 @@ do
 echo -n $i" " >> "appendmode.txt"
 done
 
-sed -e 's/\s/\n/g' < "appendmode.txt" | sort | uniq -c | sort -nr | head  -$num | awk '{print $2,$1}'
+sed -e 's/\s/\n/g' < "appendmode.txt" | sort | uniq -c | sort -nr | head  -$num | sed -E 's/(.*) (.*)/\2 \1/'
 rm "appendmode.txt"
