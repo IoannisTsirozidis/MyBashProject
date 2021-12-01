@@ -1,13 +1,13 @@
 #!/bin/bash
 	
-filename='list1.txt'
+filename=$1
 
 while read line; do
 # reading each line
 
 firstCharacter=${line:0:1}
 if ! [[ "$firstCharacter" == "#" ]]; then
-        
+ 
         foo="$line"
 	result1=${foo:0:1}
 	for (( i=1; i<${#foo}; i++ )); do
@@ -24,22 +24,40 @@ if ! [[ "$firstCharacter" == "#" ]]; then
     		hashcode=$(head -n 1 $textname)
     		> $textname 
     		wget -q $line -O $textname
-    		hashcode1="`md5sum $textname`"
-    		> $textname
-    		echo "$hashcode1" > "$textname"
+		
+		if [[ $? -ne 0 ]]; then
+    			echo $line" FAILED"
+		
+		else
+			hashcode1="`md5sum $textname`"
+    			> $textname
+    			echo "$hashcode1" > "$textname"
     		
-    		if [ "$hashcode" != "$hashcode1" ]; then
-    			echo $hashcode
-    			echo
-    			echo $hashcode1
+    			if [ "$hashcode" != "$hashcode1" ]; then
+    				echo $hashcode
+    				echo
+    				echo $hashcode1
+			fi
+    		 	
 		fi
+		
+    		
     		
     	else 
-    		echo $line" INIT"
+    		
     		wget -q $line -O $textname
-		hashcode="`md5sum $textname`"
-		> $textname
-		echo "$hashcode" > "$textname"
+    		
+    		if [[ $? -ne 0 ]]; then
+    			echo $line" FAILED"
+		else
+			echo $line" INIT"
+			hashcode="`md5sum $textname`"
+			> $textname
+			echo "$hashcode" > "$textname"
+    		
+		fi
+		
+		
     		
 	fi
 	
